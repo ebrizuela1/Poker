@@ -1,0 +1,26 @@
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.control.TextArea?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller"
+            prefHeight="600" prefWidth="700" fx:id="root">
+    <center>
+        <HBox alignment="CENTER" spacing="30" fillHeight="false">
+            <VBox alignment="CENTER" spacing="15">
+                <Button fx:id="ExtraShot" text="Extra Shot" onAction="#handleExtraShot" prefWidth="200"/>
+                <Button fx:id="Cream" text="Cream" onAction="#handleCream" prefWidth="200"/>
+                <Button fx:id="Sugar" text="Sugar" onAction="#handleSugar" prefWidth="200"/>
+                <Button fx:id="ColdFoam" text="Cold Foam" onAction="#handleColdFoam" prefWidth="200"/>
+                <Button fx:id="WhippedCream" text="Whipped Cream" onAction="#handleWhippedCream" prefWidth="200"/>
+                <HBox spacing="10">
+                    <Button fx:id="NewOrder" text="New Order" onAction="#handleNewOrder" prefWidth="95"/>
+                    <Button fx:id="DeleteOrder" text="Delete Order" onAction="#handleDeleteOrder" prefWidth="95"/>
+                </HBox>
+            </VBox>
+            <TextArea fx:id="myTextArea" prefHeight="400" prefWidth="300" editable="false"/>
+        </HBox>
+    </center>
+</BorderPane>
