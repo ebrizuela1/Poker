@@ -8,6 +8,7 @@ public class Card {
         this.suit = suit;
         this.rank = rank;
     }
+
     @Override
     public String toString(){
         String mySuit = this.suit.toString();

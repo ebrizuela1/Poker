@@ -1,3 +1,4 @@
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -13,6 +14,9 @@ public class WelcomeController implements Initializable {
     }
 
     public void handleJoinButton(){
-        System.out.println("Entered IP: " + ipField.getText() + "\nEntered port: " + portField.getText());
+        String enteredIP = ipField.getText().trim();
+        Integer enteredPort = Integer.parseInt(portField.getText());
+        System.out.println("Entered IP: " + enteredIP + "\nEntered port: " + enteredPort);
+
     }
 }
