@@ -1,3 +1,4 @@
+package PlayingCards;
 public enum Suit{
     Hearts,
     Diamonds,
