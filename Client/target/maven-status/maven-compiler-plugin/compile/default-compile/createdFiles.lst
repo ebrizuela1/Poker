@@ -1,10 +1,14 @@
 Cream.class
 BasicCoffee.class
 ColdFoam.class
+Rank.class
+Deck.class
 WhippedCream.class
 CoffeeDecorator.class
 ExtraShot.class
 Coffee.class
+JavaFXTemplate.class
+Card.class
 Controller.class
 Sugar.class
-JavaFXTemplate.class
+Suit.class
