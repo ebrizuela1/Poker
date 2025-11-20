@@ -5,13 +5,13 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 
-public class JavaFXTemplate extends Application {
+public class MainApp extends Application {
     public void start(Stage primaryStage) {
         try {
-            Parent root = FXMLLoader.load(getClass().getResource("/FXML/MainPage.fxml"));
-            primaryStage.setTitle("Edgar Brizuela Homework 4");
+            Parent root = FXMLLoader.load(getClass().getResource("/FXML/Welcome.fxml"));
+            primaryStage.setTitle("Poker Client side");
             Scene s1 = new Scene(root,700,700);
-            s1.getStylesheets().add("/CSS/style1.css");
+            s1.getStylesheets().add("/CSS/Welcome.css");
             primaryStage.setScene(s1);
             primaryStage.show();
         } catch(Exception e) {
