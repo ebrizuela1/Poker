@@ -9,6 +9,5 @@ import java.util.ResourceBundle;
 
 
 public class GameController implements Initializable {
-
     public void initialize(URL location, ResourceBundle resources){}
 }
