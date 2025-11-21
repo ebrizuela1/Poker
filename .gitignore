@@ -1,2 +1,6 @@
 Client/target/
 Server/target/
+.idea/
+**/.idea/
+*.iml
+**/target/
