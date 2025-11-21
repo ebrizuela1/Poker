@@ -32,4 +32,17 @@ class MyTest {
         }
     }
 
+    @Test
+    void handSort(){
+        PokerInfo game = new PokerInfo();
+        game.drawClient();
+
+        ArrayList<Card> clientCards = game.getClientHand();
+
+        System.out.println("Unsorted : " + clientCards);
+        game.sortHand(clientCards);
+        System.out.println("Sorted : " + clientCards);
+        Assertions.assertNotEquals(clientCards, game.getClientHand());
+    }
+
 }
