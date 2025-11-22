@@ -34,9 +34,14 @@ public class PokerInfo {
 
     public void sortHand(ArrayList<Card> hand){ Collections.sort(hand); }
 
-//    public String checkHand(ArrayList<Card> hand){
-//
-//    }
+    public int checkHand(ArrayList<Card> hand){
+        if (this.hasStraightFlush(hand)){ return 5;}
+        if (this.hasTriple(hand)){ return 4;}
+        if (this.hasStraight(hand)){ return 3;}
+        if (this.hasFlush(hand)){ return 2;}
+        if (this.hasPair(hand)){ return 1;}
+        return 0; // Junk Cards
+    }
 
     public boolean hasPair(ArrayList<Card> hand){
         Collections.sort(hand);
@@ -65,8 +70,8 @@ public class PokerInfo {
     }
 
     public boolean hasStraightFlush(ArrayList<Card> hand){
-        if (hasStraight(hand)){
-            return hasFlush(hand);
+        if (this.hasStraight(hand)){
+            return this.hasFlush(hand);
         }
         return false;
     }
