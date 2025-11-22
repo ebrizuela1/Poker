@@ -5,10 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="590859c8-2c4a-4811-9865-8e6eb392c895" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Server/src/main/java/ThreeCardLogic.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Server/src/main/java/PlayingCards/Card.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Server/src/main/java/PlayingCards/Deck.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Server/src/main/java/PlayingCards/Rank.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Server/src/main/java/PlayingCards/Suit.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Server/src/main/java/PokerInfo.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Client/src/main/java/PokerInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/Client/src/main/java/PokerInfo.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/main/java/ClientHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/main/java/ClientHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/main/java/ThreeCardLogic.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/main/java/ThreeCardLogic.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -233,7 +236,7 @@
       <option name="presentableId" value="Default" />
       <updated>1763509218469</updated>
       <workItem from="1763843956586" duration="1000" />
-      <workItem from="1763843968331" duration="2495000" />
+      <workItem from="1763843968331" duration="3209000" />
     </task>
     <servers />
   </component>
