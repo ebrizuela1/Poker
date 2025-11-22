@@ -1,11 +1,16 @@
-<?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.control.TextArea?>
+<?xml version="1.0" encoding="UTF-8"?>
 
-<BorderPane xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller"
-            prefHeight="600" prefWidth="700" fx:id="root">
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.text.Text?>
+
+<BorderPane fx:id="root" prefHeight="600" prefWidth="700" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/25" fx:controller="Controller">
 
     <center>
-        <TextArea text="hello"/>
+        <TextArea editable="false" stylesheets="@../CSS/style.css" wrapText="true" />
     </center>
+   <top>
+      <Text stroke="BLACK" strokeType="OUTSIDE" strokeWidth="0.0" text="SERVER Control" BorderPane.alignment="CENTER" />
+   </top>
 
 </BorderPane>

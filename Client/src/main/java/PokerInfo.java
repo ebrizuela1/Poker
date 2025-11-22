@@ -1,11 +1,13 @@
 import PlayingCards.Card;
 import PlayingCards.Deck;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Objects;
 
-public class PokerInfo {
+public class PokerInfo implements Serializable {
+    private static final long serialVersionUID = 1L;
     private ArrayList<Card> clientHand;
     private ArrayList<Card> dealerHand;
     private Deck gameDeck;
@@ -26,11 +28,7 @@ public class PokerInfo {
         }
     }
 
-    public void drawDealer(){
-        for (int i = 0 ; i < 3 ; i++){
-            dealerHand.add(gameDeck.getCard());
-        }
-    }
+    public void drawDealer()
 
     public void sortHand(ArrayList<Card> hand){ Collections.sort(hand); }
 

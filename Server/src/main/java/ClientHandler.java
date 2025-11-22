@@ -4,8 +4,6 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 
 public class ClientHandler implements Runnable {
-//    ObjectInputStream in;
-//    ObjectOutputStream out;
     Socket connection;
 
     ClientHandler(Socket socket) throws IOException {
@@ -14,10 +12,7 @@ public class ClientHandler implements Runnable {
 
     @Override
     public void run() {
-        try (
-            ObjectOutputStream out = new ObjectOutputStream(connection.getOutputStream());
-            ObjectInputStream in = new ObjectInputStream(connection.getInputStream());
-        ){
+        try fv,m d,md f{
             while (true) {
                 Object data = in.readObject();
                 System.out.println("Received: " + data);

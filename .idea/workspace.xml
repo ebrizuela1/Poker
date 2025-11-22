@@ -5,17 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="590859c8-2c4a-4811-9865-8e6eb392c895" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Client/src/main/java/PokerInfo.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/Poker.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Poker.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Client/src/main/java/PlayingCards/Card.java" beforeDir="false" afterPath="$PROJECT_DIR$/Client/src/main/java/PlayingCards/Card.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Client/src/main/java/PlayingCards/Deck.java" beforeDir="false" afterPath="$PROJECT_DIR$/Client/src/main/java/PlayingCards/Deck.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Client/src/main/java/PlayingCards/Rank.java" beforeDir="false" afterPath="$PROJECT_DIR$/Client/src/main/java/PlayingCards/Rank.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Client/src/main/java/PlayingCards/Suit.java" beforeDir="false" afterPath="$PROJECT_DIR$/Client/src/main/java/PlayingCards/Suit.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Client/src/test/java/MyTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Client/src/test/java/MyTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/main/java/MainAppServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/main/java/MainAppServer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Client/src/main/java/PokerInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/Client/src/main/java/PokerInfo.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Client/src/main/java/WelcomeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Client/src/main/java/WelcomeController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/main/java/ClientHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/main/java/ClientHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/main/resources/FXML/ServerDisplay.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/main/resources/FXML/ServerDisplay.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -75,11 +70,17 @@
     "junie.onboarding.icon.badge.shown": "true",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "/Users/edgarbrizuela/Desktop/FALL2025/CS342/Poker",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
     "project.structure.last.edited": "Modules",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.2",
     "settings.editor.selected.configurable": "editor.preferences.completion",
-    "to.speed.mode.migration.done": "true"
+    "to.speed.mode.migration.done": "true",
+    "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
   <component name="RecentsManager">
@@ -218,6 +219,14 @@
       </list>
     </recent_temporary>
   </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-9823dce3aa75-bf35d07a577b-intellij.indexing.shared.core-IU-252.27397.103" />
+        <option value="bundled-js-predefined-d6986cc7102b-3aa1da707db6-JavaScript-IU-252.27397.103" />
+      </set>
+    </attachedChunks>
+  </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
       <changelist id="590859c8-2c4a-4811-9865-8e6eb392c895" name="Changes" comment="" />
@@ -225,8 +234,13 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1763509218469</updated>
+      <workItem from="1763843956586" duration="1000" />
+      <workItem from="1763843968331" duration="1228000" />
     </task>
     <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand>

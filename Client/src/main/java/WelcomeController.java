@@ -28,7 +28,6 @@ public class WelcomeController implements Initializable {
             Scene gameScene = new Scene(root, 700, 600);
             Stage currentStage = (Stage)((Node)event.getSource()).getScene().getWindow();
 
-            // 6. Switch the Scene
             currentStage.setScene(gameScene);
             currentStage.show();
         } catch (Exception e) {

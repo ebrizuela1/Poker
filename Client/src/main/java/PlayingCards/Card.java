@@ -1,6 +1,9 @@
 package PlayingCards;
 
-public class Card implements Comparable<Card> {
+import java.io.Serializable;
+
+public class Card implements Comparable<Card>, Serializable {
+    private static final long serialVersionUID = 1L;
     private Suit suit; // Ace, Spade, Heart, Diamond
     private Rank rank; // 2, . . . J, Q, K
     public String imagePath;

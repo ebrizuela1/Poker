@@ -1,5 +1,8 @@
 package PlayingCards;
-public enum Suit{
+
+import java.io.Serializable;
+
+public enum Suit implements Serializable {
     hearts("H"),
     diamonds("D"),
     spades("S"),
@@ -12,4 +15,5 @@ public enum Suit{
     public String getPower(){
         return power;
     };
+    private static final long serialVersionUID = 1L;
 }
