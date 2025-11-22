@@ -3,10 +3,11 @@ package PlayingCards;
 public class Card implements Comparable<Card> {
     private Suit suit; // Ace, Spade, Heart, Diamond
     private Rank rank; // 2, . . . J, Q, K
-
+    public String imagePath;
     public Card(Suit suit, Rank rank){
         this.suit = suit;
         this.rank = rank;
+        this.imagePath = this.getPath();
     }
 
     @Override
@@ -14,6 +15,9 @@ public class Card implements Comparable<Card> {
         return (this.rank.toString() + this.suit.toString());
     }
 
+    public String getPath(){
+        return this.suit.toString() + "_" + this.rank.getPower() + ".png";
+    }
     public String getSuitRank(){
         return (this.suit.getPower() + this.rank.getPower());
     }

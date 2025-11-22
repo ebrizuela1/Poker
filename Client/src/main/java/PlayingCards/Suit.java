@@ -1,9 +1,9 @@
 package PlayingCards;
 public enum Suit{
-    Hearts("H"),
-    Diamonds("D"),
-    Spades("S"),
-    Clubs("C");
+    hearts("H"),
+    diamonds("D"),
+    spades("S"),
+    clubs("C");
 
     private final String power;
     Suit(String power){

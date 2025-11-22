@@ -8,7 +8,7 @@
     <center>
         <ImageView fx:id="cardImage" fitHeight="300" fitWidth="200" preserveRatio="true">
             <image>
-                <Image url="@../Cards/hearts_queen.png"/>
+                <Image url="@../Cards/hearts_12.png"/>
             </image>
         </ImageView>
     </center>

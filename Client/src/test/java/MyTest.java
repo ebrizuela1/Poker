@@ -54,9 +54,9 @@ class MyTest {
     @Test
     void simplePairCheck(){ // Hand = [ S2, 4C, 2C ]
         ArrayList<Card> clientHand = new ArrayList<>();
-        clientHand.add(new Card(Suit.Spades, Rank.two));
-        clientHand.add(new Card(Suit.Clubs, Rank.two));
-        clientHand.add(new Card(Suit.Clubs, Rank.four));
+        clientHand.add(new Card(Suit.spades, Rank.two));
+        clientHand.add(new Card(Suit.clubs, Rank.two));
+        clientHand.add(new Card(Suit.clubs, Rank.four));
         PokerInfo game = new PokerInfo();
         Assertions.assertTrue(game.hasPair(clientHand));
     }
@@ -64,9 +64,9 @@ class MyTest {
     @Test
     void noPairCheck(){ // Hand = [ S3, 4C, 2C ]
         ArrayList<Card> clientHand = new ArrayList<>();
-        clientHand.add(new Card(Suit.Spades, Rank.three));
-        clientHand.add(new Card(Suit.Clubs, Rank.two));
-        clientHand.add(new Card(Suit.Clubs, Rank.four));
+        clientHand.add(new Card(Suit.spades, Rank.three));
+        clientHand.add(new Card(Suit.clubs, Rank.two));
+        clientHand.add(new Card(Suit.clubs, Rank.four));
         PokerInfo game = new PokerInfo();
         Assertions.assertFalse(game.hasPair(clientHand));
     }
@@ -74,9 +74,9 @@ class MyTest {
     @Test
     void tripleCheck(){
         ArrayList<Card> clientHand = new ArrayList<>();
-        clientHand.add(new Card(Suit.Spades, Rank.three));
-        clientHand.add(new Card(Suit.Clubs, Rank.three));
-        clientHand.add(new Card(Suit.Diamonds, Rank.three));
+        clientHand.add(new Card(Suit.spades, Rank.three));
+        clientHand.add(new Card(Suit.clubs, Rank.three));
+        clientHand.add(new Card(Suit.diamonds, Rank.three));
         PokerInfo game = new PokerInfo();
         Assertions.assertTrue(game.hasTriple(clientHand));
     }
@@ -84,9 +84,9 @@ class MyTest {
     @Test
     void straightCheck(){
         ArrayList<Card> clientHand = new ArrayList<>();
-        clientHand.add(new Card(Suit.Spades, Rank.three));
-        clientHand.add(new Card(Suit.Clubs, Rank.four));
-        clientHand.add(new Card(Suit.Diamonds, Rank.five));
+        clientHand.add(new Card(Suit.spades, Rank.three));
+        clientHand.add(new Card(Suit.clubs, Rank.four));
+        clientHand.add(new Card(Suit.diamonds, Rank.five));
         PokerInfo game = new PokerInfo();
         Assertions.assertTrue(game.hasStraight(clientHand));
     }
@@ -94,9 +94,9 @@ class MyTest {
     @Test
     void flushCheck(){
         ArrayList<Card> clientHand = new ArrayList<>();
-        clientHand.add(new Card(Suit.Spades, Rank.three));
-        clientHand.add(new Card(Suit.Spades, Rank.four));
-        clientHand.add(new Card(Suit.Spades, Rank.five));
+        clientHand.add(new Card(Suit.spades, Rank.three));
+        clientHand.add(new Card(Suit.spades, Rank.four));
+        clientHand.add(new Card(Suit.spades, Rank.five));
         PokerInfo game = new PokerInfo();
         Assertions.assertTrue(game.hasFlush(clientHand));
     }
@@ -104,10 +104,19 @@ class MyTest {
     @Test
     void straightFlushCheck(){
         ArrayList<Card> clientHand = new ArrayList<>();
-        clientHand.add(new Card(Suit.Spades, Rank.three));
-        clientHand.add(new Card(Suit.Spades, Rank.four));
-        clientHand.add(new Card(Suit.Spades, Rank.five));
+        clientHand.add(new Card(Suit.spades, Rank.three));
+        clientHand.add(new Card(Suit.spades, Rank.four));
+        clientHand.add(new Card(Suit.spades, Rank.five));
         PokerInfo game = new PokerInfo();
         Assertions.assertTrue(game.hasStraightFlush(clientHand));
     }
+
+    @Test
+    void checkImagePath() {
+        Card c = new Card(Suit.spades, Rank.two);
+        System.out.println(c.imagePath);
+        Assertions.assertEquals("spades_2.png", c.imagePath);
+    }
 }
+
+
