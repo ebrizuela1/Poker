@@ -11,9 +11,11 @@ public class Card implements Comparable<Card> {
 
     @Override
     public String toString(){
-        String mySuit = this.suit.toString();
-        String myRank = this.rank.toString();
         return (this.rank.toString() + this.suit.toString());
+    }
+
+    public String getSuitRank(){
+        return (this.suit.getPower() + this.rank.getPower());
     }
 
     @Override
@@ -21,5 +23,13 @@ public class Card implements Comparable<Card> {
         int rankComparison = Integer.compare(this.rank.getPower(), other.rank.getPower());
         if (rankComparison == 0){ return this.suit.compareTo(other.suit);} // Ranks equal, Comp Suit
         return rankComparison;
+    }
+
+    public Rank getRank() {
+        return this.rank;
+    }
+
+    public Suit getSuit() {
+        return this.suit;
     }
 }
