@@ -28,7 +28,7 @@ public class PokerInfo implements Serializable {
         }
     }
 
-    public void drawDealer()
+    public void drawDealer(){}
 
     public void sortHand(ArrayList<Card> hand){ Collections.sort(hand); }
 

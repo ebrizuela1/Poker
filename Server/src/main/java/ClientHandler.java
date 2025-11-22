@@ -12,7 +12,10 @@ public class ClientHandler implements Runnable {
 
     @Override
     public void run() {
-        try fv,m d,md f{
+        try (
+            ObjectOutputStream out = new ObjectOutputStream(connection.getOutputStream());
+            ObjectInputStream in = new ObjectInputStream(connection.getInputStream());
+        ){
             while (true) {
                 Object data = in.readObject();
                 System.out.println("Received: " + data);
