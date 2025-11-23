@@ -11,30 +11,20 @@ public class MainAppServer {
     }
 
     public void serverCode()throws IOException, ClassNotFoundException{
+        try(ServerSocket mysocket = new ServerSocket(5555)) {
+            System.out.println("Server is waiting for a client!");
 
-        ServerSocket mysocket = new ServerSocket(5555);
-        System.out.println("Server is waiting for a client!");
-
-        Socket connection = mysocket.accept();
-
-        System.out.println("Server has a client!!!");
-        System.out.println("This is the remote port the client is using: " + connection.getPort());
-
-
-        ObjectOutputStream out = new ObjectOutputStream(connection.getOutputStream());
-        ObjectInputStream in = new ObjectInputStream(connection.getInputStream());
-        connection.setTcpNoDelay(true);
-
-        while(true) {
-
-            //* try with string objects
-
-            String data = in.readObject().toString();
-            System.out.println("Server received: " + data);
-            out.writeObject(data.toUpperCase());
-
+            while (true) {
+                Socket connection = mysocket.accept();
+                System.out.println("Server has a client!!!");
+                System.out.println("This is the remote port the client is using: " + connection.getPort());
+                ClientHandler handler = new ClientHandler(connection);
+                Thread t = new Thread(handler);
+                t.start();
+            }
+        }catch(IOException e){
+            System.out.println("The server has stopped working: " + e.getMessage());
         }
-
         //*/
 
 	    	/* with a serializable class

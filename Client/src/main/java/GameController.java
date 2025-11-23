@@ -1,3 +1,6 @@
+import PlayingCards.Deck;
+import PlayingCards.Card;
+
 import javafx.fxml.FXML;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
@@ -9,5 +12,11 @@ import java.util.ResourceBundle;
 
 
 public class GameController implements Initializable {
-    public void initialize(URL location, ResourceBundle resources){}
+    private Deck deck;
+
+
+    public void initialize(URL location, ResourceBundle resources){
+        deck = new Deck();
+
+    }
 }
