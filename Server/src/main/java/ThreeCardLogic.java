@@ -68,9 +68,23 @@ public class ThreeCardLogic {
 
                 if (dSum == pSum) return 0;
                 return dSum >  pSum ? 1 : 2;
-
             case 2:
+                int dPairRank =  dealer.get(0).getRank() == dealer.get(1).getRank() ?
+                        dealer.get(0).getRank().getPower() : dealer.get(1).getRank().getPower();
+                int pPairRank =  player.get(0).getRank() == player.get(1).getRank() ?
+                        player.get(0).getRank().getPower() : player.get(1).getRank().getPower();
+                if(dPairRank != pPairRank){
+                    return dPairRank > pPairRank ? 1 : 2;
+                }
+                dSum = 0;
+                pSum = 0;
+                for(PlayingCards.Card card : dealer)
+                    dSum += card.getRank().getPower();
+                for(PlayingCards.Card card : player)
+                    pSum += card.getRank().getPower();
 
+                if (dSum == pSum) return 0;
+                return dSum >  pSum ? 1 : 2;
             default:
                 return 0;
         }
