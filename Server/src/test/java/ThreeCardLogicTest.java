@@ -13,6 +13,12 @@ class ThreeCardLogicTest {
         return hand;
     }
 
+    /*
+    * = =   =   =   =   =   =   =   =   =   =   =   =   =
+    *                   TESTING evalHand
+    * = =   =   =   =   =   =   =   =   =   =   =   =   =
+    * */
+
     @Test
     void testEvalHandBuggy(){
         ArrayList<Card> hand = new ArrayList<>();
@@ -136,4 +142,12 @@ class ThreeCardLogicTest {
         );
         assertEquals(0, ThreeCardLogic.evalHand(hand), "Should identify High Card");
     }
+
+    /*
+     * = =   =   =   =   =   =   =   =   =   =   =   =   =
+     *                   TESTING evalPPLWinnings
+     * = =   =   =   =   =   =   =   =   =   =   =   =   =
+     * */
+
+
 }
