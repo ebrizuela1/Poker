@@ -5,17 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="590859c8-2c4a-4811-9865-8e6eb392c895" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Client/src/main/java/PokerInfo.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/Poker.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Poker.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Client/src/main/java/PlayingCards/Card.java" beforeDir="false" afterPath="$PROJECT_DIR$/Client/src/main/java/PlayingCards/Card.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Client/src/main/java/PlayingCards/Deck.java" beforeDir="false" afterPath="$PROJECT_DIR$/Client/src/main/java/PlayingCards/Deck.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Client/src/main/java/PlayingCards/Rank.java" beforeDir="false" afterPath="$PROJECT_DIR$/Client/src/main/java/PlayingCards/Rank.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Client/src/main/java/PlayingCards/Suit.java" beforeDir="false" afterPath="$PROJECT_DIR$/Client/src/main/java/PlayingCards/Suit.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Client/src/test/java/MyTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Client/src/test/java/MyTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/main/java/MainAppServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/main/java/MainAppServer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -94,7 +85,7 @@
       <recent name="$PROJECT_DIR$/Server/src/main/resources" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.MyTest.handSort">
+  <component name="RunManager" selected="JUnit.MyTest.initDeck">
     <configuration name="MyTest.handSort" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="projectThreeClient" />
       <option name="PACKAGE_NAME" value="" />
@@ -213,8 +204,8 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.MyTest.handSort" />
         <item itemvalue="JUnit.MyTest.initDeck" />
+        <item itemvalue="JUnit.MyTest.handSort" />
       </list>
     </recent_temporary>
   </component>
