@@ -5,6 +5,7 @@ import java.net.Socket;
 
 public class ClientHandler implements Runnable {
     Socket connection;
+    PokerInfo currentGame;
 
     ClientHandler(Socket socket) throws IOException {
         connection = socket;

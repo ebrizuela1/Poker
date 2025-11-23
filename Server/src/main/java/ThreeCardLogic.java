@@ -3,8 +3,8 @@ import java.util.Collections;
 import java.util.Objects;
 
 public class ThreeCardLogic {
-    // Returns int based on hand type
-    /* -1 -> something is wrong
+    /*  Returns int based on hand type
+    *   -1 -> something is wrong
     *   0 -> high card?
     *   1 -> pair
     *   2 -> flush
@@ -45,6 +45,7 @@ public class ThreeCardLogic {
         if(dRank < pRank) return 2;
 
         switch(dRank){
+            // logic for straight and straight flush is the same when tie breaking
             case 5:
             case 3:
                 boolean dAceLow = dealer.get(0).getRank().getPower() == 2 && dealer.get(0).getRank().getPower() == 14;
@@ -53,11 +54,15 @@ public class ThreeCardLogic {
                 if(dAceLow && pAceLow){return 0;}
                 if(pAceLow){return 1;}
                 if(dAceLow){return 2;}
+
+            // logic for tie breaking high card would also be used when tie breaking a straight and flush further
             case 1:
                 int dHighCard = dealer.get(2).getRank().getPower();
                 int pHighCard = player.get(2).getRank().getPower();
                 if(dHighCard == pHighCard){return 0;}
                 return dHighCard > pHighCard ? 1 : 2;
+
+            // logic for tie breaking three of kind
             case 4:
                 int dSum = 0;
                 int pSum = 0;
@@ -68,9 +73,25 @@ public class ThreeCardLogic {
 
                 if (dSum == pSum) return 0;
                 return dSum >  pSum ? 1 : 2;
-
+            // logic for tie breaking two pair
             case 2:
+                int dPairRank =  dealer.get(0).getRank() == dealer.get(1).getRank() ?
+                        dealer.get(0).getRank().getPower() : dealer.get(1).getRank().getPower();
+                int pPairRank =  player.get(0).getRank() == player.get(1).getRank() ?
+                        player.get(0).getRank().getPower() : player.get(1).getRank().getPower();
+                if(dPairRank != pPairRank){
+                    return dPairRank > pPairRank ? 1 : 2;
+                }
+                dSum = 0;
+                pSum = 0;
+                for(PlayingCards.Card card : dealer)
+                    dSum += card.getRank().getPower();
+                for(PlayingCards.Card card : player)
+                    pSum += card.getRank().getPower();
 
+                if (dSum == pSum) return 0;
+                return dSum >  pSum ? 1 : 2;
+            // dont think anything will be default unless a deck is wrong i.e. evalHand(hand) -> -1
             default:
                 return 0;
         }
@@ -78,7 +99,6 @@ public class ThreeCardLogic {
 
     /// private static method finding if hand contains pair
     private static boolean hasPair(ArrayList<PlayingCards.Card> hand){
-//        Collections.sort(hand);
         return (hand.get(0).getRank() == hand.get(1).getRank()) ||
                 (hand.get(1).getRank() == hand.get(2).getRank());
     }
@@ -92,7 +112,6 @@ public class ThreeCardLogic {
     /// check if hand contains a straight and account for straights containing ace since
     /// it can be A23 or QKA
     private static boolean hasStraight(ArrayList<PlayingCards.Card> hand){
-//        Collections.sort(hand);
         return  (hand.get(0).getRank().getPower() == 2 && hand.get(1).getRank().getPower() == 3
                 && hand.get(2).getRank().getPower() == 14) ||
                 (hand.get(0).getRank().getPower() + 1 == hand.get(1).getRank().getPower() &&
@@ -106,7 +125,6 @@ public class ThreeCardLogic {
 
     /// all cards have the same rank
     private static boolean hasThreeOfKind(ArrayList<PlayingCards.Card> hand) {
-//        Collections.sort(hand);
         return hand.get(0).getRank() == hand.get(1).getRank() && hand.get(1).getRank() == hand.get(2).getRank();
     }
 }
