@@ -47,6 +47,18 @@ public class ThreeCardLogic {
         switch(dRank){
             case 5:
             case 3:
+                boolean dAceLow = dealer.get(0).getRank().getPower() == 2 && dealer.get(0).getRank().getPower() == 14;
+                boolean pAceLow = player.get(0).getRank().getPower() == 2 && player.get(0).getRank().getPower() == 14;
+
+                if(dAceLow && pAceLow){return 0;}
+                if(pAceLow){return 1;}
+                if(dAceLow){return 2;}
+            case 1:
+                int dHighCard = dealer.get(2).getRank().getPower();
+                int pHighCard = player.get(2).getRank().getPower();
+                if(dHighCard == pHighCard){return 0;}
+                return dHighCard > pHighCard ? 1 : 2;
+            case 4:
                 int dSum = 0;
                 int pSum = 0;
                 for(PlayingCards.Card card : dealer)
@@ -56,10 +68,9 @@ public class ThreeCardLogic {
 
                 if (dSum == pSum) return 0;
                 return dSum >  pSum ? 1 : 2;
-            case 4:
 
             case 2:
-            case 1:
+
             default:
                 return 0;
         }
