@@ -19,15 +19,20 @@ public class WelcomeController implements Initializable {
 
     public void handleJoinButton(ActionEvent event){
         String enteredIP = ipField.getText().trim();
+        if (portField.getText().isEmpty()){
+            System.out.println("Port is empty!");
+            return;
+        }
         Integer enteredPort = Integer.parseInt(portField.getText());
         System.out.println("Connecting to: " + enteredIP + ":" + enteredPort);
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML/Game.fxml"));
             Parent root = loader.load();
             GameController gameCtrl = loader.getController();
+
+            gameCtrl.connectClient(enteredIP, enteredPort);
             Scene gameScene = new Scene(root, 700, 600);
             Stage currentStage = (Stage)((Node)event.getSource()).getScene().getWindow();
-
             currentStage.setScene(gameScene);
             currentStage.show();
         } catch (Exception e) {

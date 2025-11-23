@@ -1,6 +1,7 @@
 import PlayingCards.Deck;
 import PlayingCards.Card;
 
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
@@ -12,11 +13,18 @@ import java.util.ResourceBundle;
 
 
 public class GameController implements Initializable {
-    private Deck deck;
+    Client clientConnection;
 
+    public void connectClient(String ip, int port) {
+        clientConnection = new Client(ip, port, data -> {
+            Platform.runLater(() -> {
+                PokerInfo info = (PokerInfo) data;
+                System.out.println(info.gameMessage);
+            });
+        });
+        clientConnection.start();
+    }
 
     public void initialize(URL location, ResourceBundle resources){
-        deck = new Deck();
-
     }
 }

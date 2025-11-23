@@ -1,29 +1,32 @@
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+import java.io.*;
 import java.net.Socket;
 
 public class ClientHandler implements Runnable {
     Socket connection;
-    PokerInfo currentGame;
+    private ObjectInputStream in;
+    private ObjectOutputStream out;
 
     ClientHandler(Socket socket) throws IOException {
-        connection = socket;
+        this.connection = socket;
     }
 
     @Override
     public void run() {
-        try (
-            ObjectOutputStream out = new ObjectOutputStream(connection.getOutputStream());
-            ObjectInputStream in = new ObjectInputStream(connection.getInputStream());
-        ){
+        try {
+                out = new ObjectOutputStream(connection.getOutputStream());
+                in = new ObjectInputStream(connection.getInputStream());
+                connection.setTcpNoDelay(true);
             while (true) {
-                Object data = in.readObject();
-                System.out.println("Received: " + data);
+                PokerInfo data = (PokerInfo) in.readObject();
+                System.out.println("Receiving data from Client #: " + connection.getPort());
+                data.gameMessage = "Connected to the server Client Number : " + connection.getPort();
+                out.writeObject(data);
+                System.out.println("Data : " + data);
+                out.reset();
             }
         } catch (Exception e) {
+            System.out.println("Client : " + connection.getPort() + "disconnected on an error");
             System.out.println("Exception occured: " + e);
         }
     }
-
 }
