@@ -87,12 +87,12 @@ public class GameController implements Initializable {
 
     public void handlePlay() {
         if (currentInfo == null) return;
+        animateDealerCards(currentInfo.getDealerHand());
         setPlayFoldDisable(true);
 
         currentInfo.gameMessage = "PLAY";
         log("Player chooses to PLAY. Revealing dealer's hand...");
         statusLabel.setText("Revealing Dealer Hand...");
-        animateDealerCards(currentInfo.getDealerHand());
 
         clientConnection.send(currentInfo);
     }
@@ -117,6 +117,12 @@ public class GameController implements Initializable {
         }
 
         if ("Hand Dealt. Play or Fold.".equals(msg)) {
+//            resetCardImage(playerCardOne);
+//            resetCardImage(playerCardTwo);
+//            resetCardImage(playerCardThree);
+//            resetCardImage(dealerCardOne);
+//            resetCardImage(dealerCardTwo);
+//            resetCardImage(dealerCardThree);
             animatePlayerCards(info.getClientHand());
             playButton.setDisable(false);
             foldButton.setDisable(false);
@@ -141,10 +147,9 @@ public class GameController implements Initializable {
 
     public void handleFreshStart(){
         resetGameUI();
-        PokerInfo freshStart = new PokerInfo();
-        freshStart.gameMessage = "FRESH_START";
+        currentInfo.gameMessage = "FRESH_START";
 
-        clientConnection.send(freshStart);
+        clientConnection.send(currentInfo);
         log("Fresh Start! Starting over...");
     }
 
