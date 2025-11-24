@@ -8,6 +8,9 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -22,6 +25,12 @@ public class GameController implements Initializable {
     private TextField wagerField;
     @FXML
     private TextField pairPlusField;
+
+    @FXML private ImageView playerCardOne, playerCardTwo, playerCardThree;
+    @FXML private ImageView dealerCardOne, dealerCardTwo, dealerCardThree;
+
+    public void initialize(URL location, ResourceBundle resources){
+    }
 
     public void connectClient(String ip, int port) {
         clientConnection = new Client(ip, port, data -> {
@@ -71,6 +80,17 @@ public class GameController implements Initializable {
         }
     }
 
-    public void initialize(URL location, ResourceBundle resources){
+    public void updatePlayerCards(PokerInfo info){
+        ArrayList<Card> pHand = info.getClientHand();
+        playerCardOne.setImage(new Image(getClass().getResourceAsStream("/Cards/" + pHand.get(0).getPath())));
+        playerCardTwo.setImage(new Image(getClass().getResourceAsStream("/Cards/" + pHand.get(1).getPath())));
+        playerCardThree.setImage(new Image(getClass().getResourceAsStream("/Cards/" + pHand.get(2).getPath())));
+    }
+
+    public void updateDealerCards(PokerInfo info){
+        ArrayList<Card> dHand = info.getDealerHand();
+        dealerCardOne.setImage(new Image(getClass().getResourceAsStream("/Cards/" + dHand.get(0).getPath())));
+        dealerCardTwo.setImage(new Image(getClass().getResourceAsStream("/Cards/" + dHand.get(1).getPath())));
+        dealerCardThree.setImage(new Image(getClass().getResourceAsStream("/Cards/" + dHand.get(2).getPath())));
     }
 }
