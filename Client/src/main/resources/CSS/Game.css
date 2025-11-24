@@ -1,0 +1,8 @@
+#menuComboBox .list-cell .arrow-button{
+    -fx-text-fill: white;
+    -fx-background-color: #7b1414;
+}
+
+.BorderPan {
+    -fx-background-color: radial-gradient(center 50% 50%, radius 100%, #157347, #053A22);
+}
