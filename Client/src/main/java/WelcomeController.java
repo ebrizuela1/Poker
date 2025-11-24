@@ -38,7 +38,7 @@ public class WelcomeController implements Initializable {
                 Platform.runLater(() -> {
                     PokerInfo info = (PokerInfo) data;
                     gameCtrl.updateGame(info);
-                    System.out.println(info.gameMessage);
+//                    System.out.println(info.gameMessage);
                 });
             });
             gameCtrl.initClient(client);
