@@ -111,9 +111,9 @@
                 <TextField fx:id="wagerField" onAction="#setWager" promptText="Wager"/>
                 <TextField fx:id="pairPlusField" onAction="#setPairPlus" promptText="Pair Plus"/>
             </VBox>
-            <Button text="PLAY"/>
-            <Button text="PLAY hand"/>
-            <Button text="FOLD"/>
+            <Button fx:id="dealButton" text="PLAY"/>
+            <Button fx:id="playButton" text="PLAY hand"/>
+            <Button fx:id="foldButton" text="FOLD"/>
         </HBox>
     </bottom>
 </BorderPane>
