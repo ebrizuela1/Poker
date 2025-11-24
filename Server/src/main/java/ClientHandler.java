@@ -82,39 +82,45 @@ public class ClientHandler implements Runnable {
      * does not have a queen on their hand so pushes bets to next hand
      * otherwise handles logic but tie does the same thing
      * */
-    void handlePlay(PokerInfo info){
+    void handlePlay(PokerInfo info) {
+
+        int roundWinnings = ThreeCardLogic.evalPPWinnings(info.getClientHand(), info.getPairPlusBet());
         // Return val: 0 for neither, 1 if dealer wins, 2 if player wins
-        if(!isDealerQualified(info.getDealerHand())){
-            info.drawClient();
-            info.drawDealer();
-            info.gameMessage = "Redrawing!";
-            serverController.updateLog("Dealer hand not qualified... Redraw");
-            send(info);
-            return;
+        if (isDealerQualified(info.getDealerHand())) {
+//            info.drawClient();
+//            info.drawDealer();
+//            info.gameMessage = "Redrawing!";
+//            serverController.updateLog("Dealer hand not qualified... Redraw");
+//            send(info);
+//            return;
+//        }
+            int result = ThreeCardLogic.compareHands(info.getDealerHand(), info.getClientHand());
+
+            switch (result) {
+                case 0:
+                    info.gameMessage = "TIE";
+                    roundWinnings += info.getAnteBet(); // return ante to user
+                    break;
+                case 1:
+                    info.gameMessage = "LOSE";
+                    roundWinnings -= info.getAnteBet(); // subtract ante
+                    break;
+                case 2:
+                    info.gameMessage = "WIN"; // player wins anteBet * 2
+                    roundWinnings += info.getAnteBet() * 2; //
+                    break;
+                default:
+                    System.out.println("INCORRECT USAGE IN HANDLE PLAY");
+                    break;
+            }
+        }else {
+            info.gameMessage = "Dealer is not qualifies"; // message read into GameController : resetGameUI;
         }
-        int result = ThreeCardLogic.compareHands(info.getDealerHand(),info.getClientHand());
-        int winnings = ThreeCardLogic.evalPPWinnings(info.getClientHand(),info.getPairPlusBet());
-        switch(result){
-            case 0:
-                info.gameMessage = "TIE";
-                winnings += info.getAnteBet();
-                break;
-            case 1:
-                info.gameMessage = "LOSE";
-                winnings -= info.getAnteBet();
-                break;
-            case 2:
-                info.gameMessage = "WIN";
-                winnings += info.getAnteBet() * 2;
-                break;
-            default:
-                System.out.println("INCORRECT USAGE IN HANDLE PLAY");
-                break;
-        }
-        info.setTotalWinnings(info.getTotalWinnings() + winnings);
+        info.setTotalWinnings(info.getTotalWinnings() + roundWinnings);
         serverController.updateLog("Player " + playerID + ": " + info.gameMessage + " " + info.getTotalWinnings());
         send(info);
     }
+
 
     /**
      * if the user sends FOLD then they just lose everything
