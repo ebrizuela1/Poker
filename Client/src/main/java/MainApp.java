@@ -7,7 +7,7 @@ import javafx.stage.Stage;
 public class MainApp extends Application {
     public void start(Stage primaryStage) {
         try {
-            Parent root = FXMLLoader.load(getClass().getResource("/FXML/Game.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource("/FXML/Welcome.fxml"));
             primaryStage.setTitle("Poker");
             Scene s1 = new Scene(root,700,700);
             s1.getStylesheets().add("/CSS/Game.css");

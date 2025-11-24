@@ -8,7 +8,10 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 
+import static java.lang.Integer.parseInt;
+
 public class Controller {
+    @FXML private Label numberConnections;
     @FXML private TextField portTextField; // Matches fx:id in ServerDisplay.fxml
     @FXML private Button serverButton;
     @FXML private ListView<String> logList;
@@ -30,7 +33,7 @@ public class Controller {
             portTextField.setDisable(false);
         } else { // turn on server
             try {
-                int port = Integer.parseInt(portTextField.getText());
+                int port = parseInt(portTextField.getText());
                 serverThread = new ServerThread(port, this);
                 serverThread.start();
                 serverButton.setText("Turn OFF");
@@ -51,8 +54,14 @@ public class Controller {
         });
     }
 
+    public void updateConnections(int count) {
 
-    public static class ServerThread extends Thread {
+        Platform.runLater(()->{
+            numberConnections.setText(String.valueOf(Integer.parseInt(numberConnections.getText() ) + count ) );
+        });
+    }
+
+    public class ServerThread extends Thread {
         private int port;
         private Controller callback;
         private ServerSocket serverSocket;
@@ -72,6 +81,8 @@ public class Controller {
 
                 while (isRunning) {
                     Socket connection = mysocket.accept();
+                    // Accepted new Client
+                    callback.updateConnections(1);
                     callback.updateLog("Client connected: " + connection.getPort());
                     // Pass 'callback' so ClientHandler can log too
                     ClientHandler handler = new ClientHandler(connection, callback);
@@ -82,6 +93,8 @@ public class Controller {
                 if(isRunning) callback.updateLog("Server Error: " + e.getMessage());
             }
         }
+
+
 
         public void stopServer() {
             isRunning = false;

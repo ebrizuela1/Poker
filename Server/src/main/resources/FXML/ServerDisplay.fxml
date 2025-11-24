@@ -9,6 +9,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 
+<?import javafx.scene.layout.Region?>
 <BorderPane fx:id="root" prefHeight="600.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller">
     <top>
         <VBox alignment="CENTER" spacing="10" style="-fx-padding: 10;">
@@ -18,6 +19,10 @@
                 <Label text="Port:" />
                 <TextField fx:id="portTextField" prefWidth="100.0" text="5555" />
                 <Button fx:id="serverButton" onAction="#toggleServer" text="Turn ON" />
+
+                <Label style="-fx-font-size:45px" text="Clients:"/>
+                <Label fx:id="numberConnections" text="0" style="-fx-font-size:45px"/>
+
             </HBox>
 
             <Label fx:id="statusLabel" text="Status: Stopped" textFill="RED"/>

@@ -1,3 +1,5 @@
+import javafx.application.Platform;
+
 import java.io.*;
 import java.net.Socket;
 
@@ -27,6 +29,9 @@ public class ClientHandler implements Runnable {
                 out.reset();
             }
         } catch (Exception e) {
+            Platform.runLater(()->{
+                serverController.updateConnections(-1);
+            });
             System.out.println("Client : " + connection.getPort() + "disconnected on an error");
             System.out.println("Exception occured: " + e);
         }
