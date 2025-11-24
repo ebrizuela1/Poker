@@ -29,17 +29,18 @@ public class WelcomeController implements Initializable {
         Integer enteredPort = Integer.parseInt(portField.getText());
         try{
             System.out.println("Attempting connection to: " + enteredIP + ":" + enteredPort);
-            Client client = new Client(enteredIP,enteredPort,data -> {
-                Platform.runLater(() -> {
-                    PokerInfo info = (PokerInfo) data;
-                    System.out.println(info.gameMessage);
-                });
-            });
 
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML/Game.fxml"));
             Parent root = loader.load();
 
             GameController gameCtrl = loader.getController();
+            Client client = new Client(enteredIP,enteredPort,data -> {
+                Platform.runLater(() -> {
+                    PokerInfo info = (PokerInfo) data;
+                    gameCtrl.updateGame(info);
+                    System.out.println(info.gameMessage);
+                });
+            });
             gameCtrl.initClient(client);
 
             Scene gameScene = new Scene(root, 700, 600);

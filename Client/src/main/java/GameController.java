@@ -1,6 +1,4 @@
-import PlayingCards.Deck;
 import PlayingCards.Card;
-
 import javafx.animation.PauseTransition;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
@@ -16,14 +14,11 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.ResourceBundle;
-
 
 public class GameController implements Initializable {
     Client clientConnection;
@@ -42,8 +37,6 @@ public class GameController implements Initializable {
     @FXML private ImageView playerCardOne, playerCardTwo, playerCardThree;
     @FXML private ImageView dealerCardOne, dealerCardTwo, dealerCardThree;
 
-    private final String CARD_BACK_PATH = "/Cards/back.png";
-
     public void initialize(URL location, ResourceBundle resources){
         resetGameUI();
     }
@@ -56,30 +49,6 @@ public class GameController implements Initializable {
         PokerInfo hello = new PokerInfo();
         hello.gameMessage = "New player connected";
         clientConnection.send(hello);
-    }
-
-    public void setWager(){
-        Integer enteredAmount = Integer.parseInt(wagerField.getText());
-        if(enteredAmount >= 5 && enteredAmount <= 25) {
-            System.out.println("Entered Amount: " + enteredAmount);
-            currentInfo.setAnteBet(enteredAmount);
-        } else {
-            System.out.println("Invalid Amount");
-        }
-    }
-
-    public void setPairPlus(){
-        if (pairPlusField.getText() == null) {
-            System.out.println("Entered Amount: 0");
-            currentInfo.setPairPlusBet(0);
-        }
-        Integer enteredAmount = Integer.parseInt(pairPlusField.getText());
-        if(enteredAmount == 0 || (enteredAmount >= 5 && enteredAmount <= 25)) {
-            System.out.println("Entered Amount: " + enteredAmount);
-            currentInfo.setPairPlusBet(enteredAmount);
-        } else  {
-            System.out.println("Invalid Amount");
-        }
     }
 
     public void handleDeal(ActionEvent event) {
@@ -160,11 +129,15 @@ public class GameController implements Initializable {
             root.setStyle(newStyle);
         }
         newLook = !newLook;
-        showGameOverAlert(40);
     }
 
     public void handleFreshStart(){
-        System.out.println("Fresh starting...");
+        resetGameUI();
+        PokerInfo freshStart = new PokerInfo();
+        freshStart.gameMessage = "FRESH_START";
+
+        clientConnection.send(freshStart);
+        log("Fresh Start! Starting over...");
     }
 
     public void handleExit(){
@@ -255,6 +228,7 @@ public class GameController implements Initializable {
     }
 
     private void resetCardImage(ImageView view) {
+        String CARD_BACK_PATH = "/Cards/back.png";
         view.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream(CARD_BACK_PATH))));
     }
 

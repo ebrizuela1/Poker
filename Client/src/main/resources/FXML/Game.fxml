@@ -78,7 +78,7 @@
                 <Label text="WAGERS" styleClass="control-label"/>
                 <HBox spacing="5">
                     <TextField fx:id="wagerField" promptText="Ante ($5-25)" prefWidth="100"/>
-                    <TextField fx:id="pairPlusField" promptText="Pair+ (Opt)" prefWidth="90"/>
+                    <TextField fx:id="pairPlusField" promptText="Pair+ ($5-25)" prefWidth="90"/>
                 </HBox>
             </VBox>
 
