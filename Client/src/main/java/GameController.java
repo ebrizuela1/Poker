@@ -5,13 +5,19 @@ import javafx.animation.PauseTransition;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Objects;
@@ -23,8 +29,6 @@ public class GameController implements Initializable {
     Client clientConnection;
     private PokerInfo currentInfo;
     private boolean newLook = false;
-    private final String originalStyle = "-fx-background-color: radial-gradient(center 50% 50%, radius 100%, #157347, #053A22);";
-    private final String newStyle = "-fx-background-color: radial-gradient(center 50% 50%, radius 100%, #9F8000, #816317);";
 
 
     @FXML private ComboBox<String> menuComboBox;
@@ -77,20 +81,6 @@ public class GameController implements Initializable {
             System.out.println("Invalid Amount");
         }
     }
-
-//    public void updatePlayerCards(PokerInfo info){
-//        ArrayList<Card> pHand = info.getClientHand();
-//        playerCardOne.setImage(new Image(getClass().getResourceAsStream("/Cards/" + pHand.get(0).getPath())));
-//        playerCardTwo.setImage(new Image(getClass().getResourceAsStream("/Cards/" + pHand.get(1).getPath())));
-//        playerCardThree.setImage(new Image(getClass().getResourceAsStream("/Cards/" + pHand.get(2).getPath())));
-//    }
-//
-//    public void updateDealerCards(PokerInfo info){
-//        ArrayList<Card> dHand = info.getDealerHand();
-//        dealerCardOne.setImage(new Image(getClass().getResourceAsStream("/Cards/" + dHand.get(0).getPath())));
-//        dealerCardTwo.setImage(new Image(getClass().getResourceAsStream("/Cards/" + dHand.get(1).getPath())));
-//        dealerCardThree.setImage(new Image(getClass().getResourceAsStream("/Cards/" + dHand.get(2).getPath())));
-//    }
 
     public void handleDeal(ActionEvent event) {
         try {
@@ -163,15 +153,20 @@ public class GameController implements Initializable {
 
     public void handleNewLook(){
         if(newLook){
+            String originalStyle = "-fx-background-color: radial-gradient(center 50% 50%, radius 100%, #157347, #053A22);";
             root.setStyle(originalStyle);
         } else {
+            String newStyle = "-fx-background-color: radial-gradient(center 50% 50%, radius 100%, #9F8000, #816317);";
             root.setStyle(newStyle);
         }
         newLook = !newLook;
+        showGameOverAlert(40);
     }
+
     public void handleFreshStart(){
         System.out.println("Fresh starting...");
     }
+
     public void handleExit(){
         Platform.exit();
         System.exit(0);
@@ -182,21 +177,25 @@ public class GameController implements Initializable {
     * */
 
     private void showGameOverAlert(int winnings) {
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Round Over");
-        alert.setHeaderText(winnings >= 0 ? "You Won $" + winnings + "!" : "You Lost $" + Math.abs(winnings) + ".");
-        alert.setContentText("Would you like to play another round?");
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML/ResultPopup.fxml"));
+            Parent root = loader.load();
 
-        ButtonType playAgainBtn = new ButtonType("Play Again");
-        ButtonType exitBtn = new ButtonType("Exit", ButtonBar.ButtonData.CANCEL_CLOSE);
-        alert.getButtonTypes().setAll(playAgainBtn, exitBtn);
+            Stage resultStage = new Stage();
+            resultStage.setTitle("Game Results");
 
-        Optional<ButtonType> result = alert.showAndWait();
-        if (result.isPresent() && result.get() == playAgainBtn) {
-            resetGameUI();
-        } else {
-            log("Exiting game.");
-            System.exit(0);
+            resultStage.initOwner(root.getScene().getWindow());
+            resultStage.initModality(Modality.APPLICATION_MODAL);
+
+             ResultController resultController = loader.getController();
+             resultController.displayResult(winnings, this);
+
+            Scene scene = new Scene(root);
+            resultStage.setScene(scene);
+            resultStage.showAndWait();
+
+        } catch (IOException e) {
+            log("Failed to load Result Scene: " + e.getMessage());
         }
     }
 
