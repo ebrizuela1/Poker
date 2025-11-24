@@ -2,12 +2,14 @@ import java.io.*;
 import java.net.Socket;
 
 public class ClientHandler implements Runnable {
-    Socket connection;
+    public Socket connection;
     private ObjectInputStream in;
     private ObjectOutputStream out;
+    public Controller serverController;
 
-    ClientHandler(Socket socket) throws IOException {
+    ClientHandler(Socket socket, Controller controller) throws IOException {
         this.connection = socket;
+        this.serverController = controller;
     }
 
     @Override

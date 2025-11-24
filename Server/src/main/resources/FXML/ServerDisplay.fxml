@@ -1,16 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 
-<BorderPane fx:id="root" prefHeight="600" prefWidth="700" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/25" fx:controller="Controller">
+<BorderPane fx:id="root" prefHeight="600.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller">
+    <top>
+        <VBox alignment="CENTER" spacing="10" style="-fx-padding: 10;">
+            <Text style="-fx-font-size: 20; -fx-font-weight: bold;" text="Poker Server" />
 
+            <HBox alignment="CENTER" spacing="10">
+                <Label text="Port:" />
+                <TextField fx:id="portTextField" prefWidth="100.0" text="5555" />
+                <Button fx:id="serverButton" onAction="#toggleServer" text="Turn ON" />
+            </HBox>
+
+            <Label fx:id="statusLabel" text="Status: Stopped" textFill="RED"/>
+        </VBox>
+    </top>
     <center>
-        <TextArea editable="false" stylesheets="@../CSS/style.css" wrapText="true" />
+        <ListView fx:id="logList" />
     </center>
-   <top>
-      <Text stroke="BLACK" strokeType="OUTSIDE" strokeWidth="0.0" text="SERVER Control" BorderPane.alignment="CENTER" />
-   </top>
-
 </BorderPane>
