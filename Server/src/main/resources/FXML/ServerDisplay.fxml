@@ -20,8 +20,8 @@
                 <TextField fx:id="portTextField" prefWidth="100.0" text="5555" />
                 <Button fx:id="serverButton" onAction="#toggleServer" text="Turn ON" />
 
-                <Label style="-fx-font-size:45px" text="Clients:"/>
-                <Label fx:id="numberConnections" text="0" style="-fx-font-size:45px"/>
+                <Label style="-fx-font-size:30px" text="Clients:"/>
+                <Label fx:id="numberConnections" text="0" style="-fx-font-size:30px"/>
 
             </HBox>
 

@@ -31,6 +31,7 @@ public class ClientHandler implements Runnable {
         } catch (Exception e) {
             Platform.runLater(()->{
                 serverController.updateConnections(-1);
+                serverController.updateLog("Client disconnected:" + connection.getPort() );
             });
             System.out.println("Client : " + connection.getPort() + "disconnected on an error");
             System.out.println("Exception occured: " + e);

@@ -27,7 +27,7 @@ public class WelcomeController implements Initializable {
             return;
         }
         Integer enteredPort = Integer.parseInt(portField.getText());
-        try {
+        try{
             System.out.println("Attempting connection to: " + enteredIP + ":" + enteredPort);
             Client client = new Client(enteredIP,enteredPort,data -> {
                 Platform.runLater(() -> {
