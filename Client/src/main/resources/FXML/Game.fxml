@@ -18,9 +18,9 @@
         <VBox styleClass="transparent-pane">
             <MenuBar styleClass="transparent-menubar">
                 <Menu text="Options">
-                    <MenuItem text="New Look" onAction="#handleMenu"/>
-                    <MenuItem text="Fresh Start" onAction="#handleMenu"/>
-                    <MenuItem text="Exit" onAction="#handleMenu"/>
+                    <MenuItem text="New Look" onAction="#handleNewLook"/>
+                    <MenuItem text="Fresh Start" onAction="#handleFreshStart"/>
+                    <MenuItem text="Exit" onAction="#handleExit"/>
                 </Menu>
             </MenuBar>
 
