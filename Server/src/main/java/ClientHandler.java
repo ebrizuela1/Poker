@@ -1,5 +1,5 @@
 import PlayingCards.Card;
-import PlayingCards.Deck;
+//import PlayingCards.Deck;
 import javafx.application.Platform;
 
 import java.io.*;
@@ -22,6 +22,9 @@ public class ClientHandler implements Runnable {
         this.playerID = playerID;
     }
 
+    /**
+     * run method handles receiving the user poker info object and handling logic
+     * */
     @Override
     public void run() {
         try {
@@ -33,7 +36,9 @@ public class ClientHandler implements Runnable {
                 PokerInfo data = (PokerInfo) in.readObject();
                 String action = data.gameMessage;
                 serverController.updateLog("Player " + playerID + ": " + action);
+                System.out.println("Receiving data from Client #: " + connection.getPort());
 
+                // mimicking API endpoints for simplicity
                 if ("DEAL".equals(action)) {
                     handleDeal(data);
                 } else if ("PLAY".equals(action)) {
@@ -44,16 +49,13 @@ public class ClientHandler implements Runnable {
                     handleFreshStart();
                 }
 
-//                System.out.println("Receiving data from Client #: " + connection.getPort());
-//                data.gameMessage = "Connected to the server Client Number : " + connection.getPort();
 //                out.writeObject(data);
-//                System.out.println("Data : " + data);
 //                out.reset();
             }
         } catch (Exception e) {
             Platform.runLater(()->{
                 serverController.updateConnections(-1);
-                serverController.updateLog("Player" + playerID + "disconnected:" + connection.getPort() );
+                serverController.updateLog("Player " + playerID + " disconnected:" + connection.getPort() );
             });
             System.out.println("Client : " + connection.getPort() + "disconnected on an error");
             System.out.println("Exception occured: " + e);
@@ -62,6 +64,10 @@ public class ClientHandler implements Runnable {
         }
     }
 
+    /**
+     * simple deal drawing cards. Also made changes inside of draw____ that removes card from deck so no redraws
+     * might become a problem later if game never has a resolution
+     * */
     void handleDeal(PokerInfo info){
         info.drawClient();
         info.drawDealer();
@@ -71,8 +77,21 @@ public class ClientHandler implements Runnable {
         send(info);
     }
 
+    /**
+     * if the user plays hand calculates logic but catches if the dealer
+     * does not have a queen on their hand so pushes bets to next hand
+     * otherwise handles logic but tie does the same thing
+     * */
     void handlePlay(PokerInfo info){
         // Return val: 0 for neither, 1 if dealer wins, 2 if player wins
+        if(!isDealerQualified(info.getDealerHand())){
+            info.drawClient();
+            info.drawDealer();
+            info.gameMessage = "Redrawing!";
+            serverController.updateLog("Dealer hand not qualified... Redraw");
+            send(info);
+            return;
+        }
         int result = ThreeCardLogic.compareHands(info.getDealerHand(),info.getClientHand());
         int winnings = ThreeCardLogic.evalPPWinnings(info.getClientHand(),info.getPairPlusBet());
         switch(result){
@@ -86,16 +105,20 @@ public class ClientHandler implements Runnable {
                 break;
             case 2:
                 info.gameMessage = "WIN";
-                winnings += info.getAnteBet()  * 2;
+                winnings += info.getAnteBet() * 2;
                 break;
             default:
-                System.out.println("INCORRECT USAGE OCCURED IN HANDLE PLAY");
+                System.out.println("INCORRECT USAGE IN HANDLE PLAY");
                 break;
         }
         info.setTotalWinnings(info.getTotalWinnings() + winnings);
+        serverController.updateLog("Player " + playerID + ": " + info.gameMessage + " " + info.getTotalWinnings());
         send(info);
     }
 
+    /**
+     * if the user sends FOLD then they just lose everything
+     * */
     void handleFold(PokerInfo info){
         this.gameInfo = info;
         int totalWinnings = 0;
@@ -108,16 +131,23 @@ public class ClientHandler implements Runnable {
 
         info.setTotalWinnings(totalWinnings);
         info.gameMessage = "FOLDED. You lost your wagers.";
-        serverController.updateLog("P" + playerID + " Folded. Net loss: $" + (info.getAnteBet() + info.getPairPlusBet()));
+        serverController.updateLog("Player " + playerID + ": " + info.gameMessage);
         send(info);
     }
 
+    /**
+     * initializing a new pokerInfo object to start from scratch
+     * */
     void handleFreshStart(){
         this.gameInfo = new PokerInfo();
         this.gameInfo.gameMessage = "Fresh Start successful. Ready for bets.";
         serverController.updateLog("Player " + playerID + " initiated Fresh Start.");
         send(gameInfo);
     }
+
+    /**
+     * abstracts the whole sending process for code readability
+     * */
     void send(PokerInfo info){
         try {
             out.writeObject(info);
@@ -127,6 +157,10 @@ public class ClientHandler implements Runnable {
             System.out.println("Error sending data to Player" + playerID + ": " + e.getMessage());
         }
     }
+
+    /**
+     * util method to check if dealer has a queen or higher
+     * */
     private boolean isDealerQualified(ArrayList<Card> hand) {
         Collections.sort(hand);
 
