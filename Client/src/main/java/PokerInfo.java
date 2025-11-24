@@ -11,8 +11,11 @@ public class PokerInfo implements Serializable {
     private ArrayList<Card> clientHand;
     private ArrayList<Card> dealerHand;
     private Deck gameDeck;
+    private Integer wager;
+    private Integer pairPlusWager;
 
     public String gameMessage;
+
 
     public PokerInfo(){
         this.clientHand = new ArrayList<Card>();
