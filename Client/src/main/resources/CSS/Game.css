@@ -1,8 +1,86 @@
-#menuComboBox .list-cell .arrow-button{
-    -fx-text-fill: white;
-    -fx-background-color: #7b1414;
-}
-
+/* 1. The Main Background Gradient */
 #root {
     -fx-background-color: radial-gradient(center 50% 50%, radius 100%, #157347, #053A22);
+}
+
+/* 2. Cards - Center of Attention */
+.card-image {
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.6), 15, 0, 0, 5);
+    -fx-cursor: hand;
+}
+
+/* Labels for "DEALER" and "PLAYER" */
+.hand-label {
+    -fx-text-fill: rgba(255, 255, 255, 0.7);
+    -fx-font-weight: bold;
+    -fx-font-size: 14px;
+    -fx-letter-spacing: 2px;
+}
+
+/* 3. Console - Small and Unobtrusive */
+#gameLog {
+    -fx-font-family: "Consolas";
+    -fx-font-size: 10px;
+    -fx-text-fill: #cccccc;
+    -fx-control-inner-background: rgba(0, 0, 0, 0.5); /* Semi-transparent black */
+    -fx-background-color: transparent;
+    -fx-border-color: rgba(255, 255, 255, 0.2);
+    -fx-border-radius: 5;
+}
+
+/* Hide the scrollbar track to make it cleaner */
+#gameLog .scroll-bar:vertical,
+#gameLog .scroll-bar:horizontal {
+    -fx-background-color: transparent;
+}
+
+/* 4. UI Panels - Semi-Transparent */
+.bottom-bar {
+    -fx-padding: 15;
+    /* Semi-transparent black strip at the bottom */
+    -fx-background-color: rgba(0, 0, 0, 0.4);
+    -fx-border-color: rgba(255,255,255,0.1);
+    -fx-border-width: 1 0 0 0;
+}
+
+.transparent-menubar {
+    -fx-background-color: rgba(0,0,0,0.2);
+}
+.transparent-menubar .label {
+    -fx-text-fill: white;
+}
+
+/* 5. Text Styling */
+.status-text {
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #ffeb3b;
+    -fx-effect: dropshadow(gaussian, black, 2, 1, 0, 0);
+}
+
+.money-label {
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #69f0ae;
+}
+
+.control-label {
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+}
+
+/* 6. Buttons */
+.action-btn {
+    -fx-font-weight: bold;
+    -fx-background-radius: 20;
+    -fx-cursor: hand;
+    -fx-min-width: 80px;
+}
+
+.deal-btn { -fx-background-color: #ff9800; -fx-text-fill: white; }
+.play-btn { -fx-background-color: #4caf50; -fx-text-fill: white; }
+.fold-btn { -fx-background-color: #f44336; -fx-text-fill: white; }
+
+.action-btn:hover {
+    -fx-effect: dropshadow(gaussian, rgba(255,255,255,0.5), 10, 0, 0, 0);
 }

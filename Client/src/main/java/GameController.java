@@ -1,6 +1,7 @@
 import PlayingCards.Deck;
 import PlayingCards.Card;
 
+import javafx.animation.PauseTransition;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.event.ActionEvent;
@@ -8,14 +9,17 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.util.Duration;
 
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 
 public class GameController implements Initializable {
     Client clientConnection;
+    private PokerInfo currentInfo;
 
     @FXML private ComboBox<String> menuComboBox;
     @FXML private TextField wagerField;
@@ -27,7 +31,10 @@ public class GameController implements Initializable {
     @FXML private ImageView playerCardOne, playerCardTwo, playerCardThree;
     @FXML private ImageView dealerCardOne, dealerCardTwo, dealerCardThree;
 
+    private final String CARD_BACK_PATH = "/Cards/back.png";
+
     public void initialize(URL location, ResourceBundle resources){
+        resetGameUI();
     }
 
     public void initClient(Client client) {
@@ -57,6 +64,25 @@ public class GameController implements Initializable {
                 break;
             default:
                 break;
+        }
+    }
+
+    private void showGameOverAlert(int winnings) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Round Over");
+        alert.setHeaderText(winnings >= 0 ? "You Won $" + winnings + "!" : "You Lost $" + Math.abs(winnings) + ".");
+        alert.setContentText("Would you like to play another round?");
+
+        ButtonType playAgainBtn = new ButtonType("Play Again");
+        ButtonType exitBtn = new ButtonType("Exit", ButtonBar.ButtonData.CANCEL_CLOSE);
+        alert.getButtonTypes().setAll(playAgainBtn, exitBtn);
+
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.isPresent() && result.get() == playAgainBtn) {
+            resetGameUI();
+        } else {
+            log("Exiting game.");
+            System.exit(0);
         }
     }
 
@@ -90,5 +116,115 @@ public class GameController implements Initializable {
         dealerCardOne.setImage(new Image(getClass().getResourceAsStream("/Cards/" + dHand.get(0).getPath())));
         dealerCardTwo.setImage(new Image(getClass().getResourceAsStream("/Cards/" + dHand.get(1).getPath())));
         dealerCardThree.setImage(new Image(getClass().getResourceAsStream("/Cards/" + dHand.get(2).getPath())));
+    }
+
+    public void handleDeal(ActionEvent event) {
+        try {
+            int ante = Integer.parseInt(wagerField.getText());
+            int pairPlus = pairPlusField.getText().isEmpty() ? 0 : Integer.parseInt(pairPlusField.getText());
+
+            if (ante < 5 || ante > 25 || (pairPlus != 0 && (pairPlus < 5 || pairPlus > 25))) {
+                log("Error: Bets must be between $5 and $25.");
+                return;
+            }
+
+            PokerInfo info = new PokerInfo();
+            info.setAnteBet(ante);
+            info.setPairPlusBet(pairPlus);
+            info.gameMessage = "DEAL";
+
+            clientConnection.send(info);
+
+            log("Placing bets... Dealing hand.");
+            statusLabel.setText("Dealing...");
+            setBettingFieldsDisable(true);
+            dealButton.setDisable(true);
+
+        } catch (NumberFormatException e) {
+            log("Error: Invalid bet amount.");
+        }
+    }
+
+    public void handlePlay(ActionEvent event) {
+        if (currentInfo == null) return;
+        currentInfo.setPlayBet(currentInfo.getAnteBet());
+        currentInfo.gameMessage = "PLAY";
+
+        log("Player chooses to PLAY. Revealing dealer's hand...");
+        statusLabel.setText("Revealing Dealer Hand...");
+        clientConnection.send(currentInfo);
+        setPlayFoldDisable(true);
+    }
+
+    public void handleFold(ActionEvent event) {
+        if (currentInfo == null) return;
+        currentInfo.gameMessage = "FOLD";
+        log("Player FOLDS.");
+        statusLabel.setText("You Folded.");
+        clientConnection.send(currentInfo);
+        setPlayFoldDisable(true);
+    }
+
+    private void resetGameUI() {
+        log("--- New Game ---");
+        statusLabel.setText("Place your bets.");
+        wagerField.clear();
+        pairPlusField.clear();
+        totalWinningsLabel.setText("Total Winnings: $0");
+
+        resetCardImage(playerCardOne);
+        resetCardImage(playerCardTwo);
+        resetCardImage(playerCardThree);
+        resetCardImage(dealerCardOne);
+        resetCardImage(dealerCardTwo);
+        resetCardImage(dealerCardThree);
+
+        setBettingFieldsDisable(false);
+        dealButton.setDisable(false);
+        setPlayFoldDisable(true);
+        currentInfo = null;
+    }
+
+    private void animatePlayerCards(ArrayList<Card> hand) {
+        ImageView[] views = {playerCardOne, playerCardTwo, playerCardThree};
+        for (int i = 0; i < 3; i++) {
+            final int index = i;
+            PauseTransition pause = new PauseTransition(Duration.seconds(0.5 * (i + 1)));
+            pause.setOnFinished(e -> setCardImage(views[index], hand.get(index)));
+            pause.play();
+        }
+    }
+
+    private void setCardImage(ImageView view, Card card) {
+        try {
+            view.setImage(new Image(getClass().getResourceAsStream("/Cards/" + card.getPath())));
+        } catch (Exception e) {
+            log("Error loading image: " + card.getPath());
+        }
+    }
+
+    private void setBettingFieldsDisable(boolean disable) {
+        wagerField.setDisable(disable);
+        pairPlusField.setDisable(disable);
+    }
+
+    private void setPlayFoldDisable(boolean disable) {
+        playButton.setDisable(disable);
+        foldButton.setDisable(disable);
+    }
+
+    private void updateHandImages(ArrayList<Card> hand, ImageView card1, ImageView card2, ImageView card3) {
+        if (hand == null || hand.size() < 3) return;
+        setCardImage(card1, hand.get(0));
+        setCardImage(card2, hand.get(1));
+        setCardImage(card3, hand.get(2));
+    }
+
+    private void resetCardImage(ImageView view) {
+        view.setImage(new Image(getClass().getResourceAsStream(CARD_BACK_PATH)));
+    }
+
+    private void log(String message) {
+        gameLog.appendText(message + "\n");
     }
 }

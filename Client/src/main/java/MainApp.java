@@ -7,10 +7,10 @@ import javafx.stage.Stage;
 public class MainApp extends Application {
     public void start(Stage primaryStage) {
         try {
-            Parent root = FXMLLoader.load(getClass().getResource("/FXML/Welcome.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource("/FXML/Game.fxml"));
             primaryStage.setTitle("Poker");
             Scene s1 = new Scene(root,700,700);
-            s1.getStylesheets().add("/CSS/Welcome.css");
+            s1.getStylesheets().add("/CSS/Game.css");
             primaryStage.setScene(s1);
             primaryStage.show();
         } catch(Exception e) {
