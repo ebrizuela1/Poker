@@ -85,5 +85,15 @@ public class PokerInfo implements Serializable {
         return false;
     }
 
+    public int getAnteBet() { return anteBet; }
+    public void setAnteBet(int anteBet) { this.anteBet = anteBet; }
 
+    public int getPairPlusBet() { return pairPlusBet; }
+    public void setPairPlusBet(int pairPlusBet) { this.pairPlusBet = pairPlusBet; }
+
+    public int getPlayBet() { return playBet; }
+    public void setPlayBet(int playBet) { this.playBet = playBet; }
+
+    public int getTotalWinnings() { return totalWinnings; }
+    public void setTotalWinnings(int totalWinnings) { this.totalWinnings = totalWinnings; }
 }
