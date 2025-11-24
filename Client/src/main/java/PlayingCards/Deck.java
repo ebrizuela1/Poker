@@ -36,4 +36,8 @@ public class Deck implements Serializable {
         return cards.get(0);
     }
 
+    public void removeCard(Card card){
+        cards.remove(card);
+    }
+
 }

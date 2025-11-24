@@ -85,7 +85,7 @@ public class Controller {
                     callback.updateConnections(1);
                     callback.updateLog("Client connected: " + connection.getPort());
                     // Pass 'callback' so ClientHandler can log too
-                    ClientHandler handler = new ClientHandler(connection, callback);
+                    ClientHandler handler = new ClientHandler(connection, callback, Integer.parseInt(numberConnections.getText() ));
                     Thread t = new Thread(handler);
                     t.start();
                 }
@@ -93,8 +93,6 @@ public class Controller {
                 if(isRunning) callback.updateLog("Server Error: " + e.getMessage());
             }
         }
-
-
 
         public void stopServer() {
             isRunning = false;

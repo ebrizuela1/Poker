@@ -25,7 +25,7 @@ public class ThreeCardLogic {
         return 0;
     }
     // Returns the amount won based on the hand and the bet for pair plus
-    public static int evalPPlWinnings(ArrayList<PlayingCards.Card> hand, int bet){
+    public static int evalPPWinnings(ArrayList<PlayingCards.Card> hand, int bet){
         int handRank = evalHand(hand);
         switch(handRank){
             case 5: return bet * 40 + bet;

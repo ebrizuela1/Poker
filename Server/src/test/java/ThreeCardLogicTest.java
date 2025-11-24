@@ -145,7 +145,7 @@ class ThreeCardLogicTest {
 
     /*
      * = =   =   =   =   =   =   =   =   =   =   =   =   =
-     *                   TESTING evalPPLWinnings
+     *                   TESTING evalPPWinnings
      * = =   =   =   =   =   =   =   =   =   =   =   =   =
      * */
 

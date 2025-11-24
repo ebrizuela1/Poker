@@ -37,6 +37,14 @@ public class GameController implements Initializable {
     @FXML private ImageView playerCardOne, playerCardTwo, playerCardThree;
     @FXML private ImageView dealerCardOne, dealerCardTwo, dealerCardThree;
 
+    /**
+     * CURRENT MESSAGES SENT TO SERVER:
+     *  DEAL
+     *  PLAY
+     *  FOLD
+     *  FRESH_START
+     * */
+
     public void initialize(URL location, ResourceBundle resources){
         resetGameUI();
     }
@@ -51,7 +59,7 @@ public class GameController implements Initializable {
         clientConnection.send(hello);
     }
 
-    public void handleDeal(ActionEvent event) {
+    public void handleDeal() {
         try {
             int ante = Integer.parseInt(wagerField.getText());
             int pairPlus = pairPlusField.getText().isEmpty() ? 0 : Integer.parseInt(pairPlusField.getText());
@@ -60,38 +68,38 @@ public class GameController implements Initializable {
                 log("Error: Bets must be between $5 and $25.");
                 return;
             }
+            setBettingFieldsDisable(true);
+            dealButton.setDisable(true);
 
             PokerInfo info = new PokerInfo();
             info.setAnteBet(ante);
             info.setPairPlusBet(pairPlus);
             info.gameMessage = "DEAL";
 
-            clientConnection.send(info);
-
             log("Placing bets... Dealing hand.");
             statusLabel.setText("Dealing...");
-            setBettingFieldsDisable(true);
-            dealButton.setDisable(true);
 
+            clientConnection.send(info);
         } catch (NumberFormatException e) {
             log("Error: Invalid bet amount.");
         }
     }
 
-    public void handlePlay(ActionEvent event) {
+    public void handlePlay() {
         if (currentInfo == null) return;
+        setPlayFoldDisable(true);
 
-        currentInfo.setPlayBet(currentInfo.getAnteBet());
         currentInfo.gameMessage = "PLAY";
-
         log("Player chooses to PLAY. Revealing dealer's hand...");
         statusLabel.setText("Revealing Dealer Hand...");
+        animateDealerCards(currentInfo.getDealerHand());
+
         clientConnection.send(currentInfo);
-        setPlayFoldDisable(true);
     }
 
     public void handleFold(ActionEvent event) {
         if (currentInfo == null) return;
+        animateDealerCards(currentInfo.getDealerHand());
 
         currentInfo.gameMessage = "FOLD";
         log("Player FOLDS. Losing all current wagers.");
@@ -108,12 +116,12 @@ public class GameController implements Initializable {
             log("Server: " + msg);
         }
 
-        if ("Hand Dealt. Place Play bet or Fold.".equals(msg)) {
+        if ("Hand Dealt. Play or Fold.".equals(msg)) {
             animatePlayerCards(info.getClientHand());
             playButton.setDisable(false);
             foldButton.setDisable(false);
         }
-        else if (msg != null && (msg.contains("Win") || msg.contains("Lose") || msg.contains("Tie") || msg.contains("Folded"))) {
+        else if (msg != null && (msg.contains("WIN") || msg.contains("LOSE") || msg.contains("TIE") || msg.contains("FOLDED"))) {
             updateHandImages(info.getDealerHand(), dealerCardOne, dealerCardTwo, dealerCardThree);
             totalWinningsLabel.setText("Total Winnings: $" + info.getTotalWinnings());
             showGameOverAlert(info.getTotalWinnings());
@@ -154,19 +162,21 @@ public class GameController implements Initializable {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML/ResultPopup.fxml"));
             Parent root = loader.load();
 
+            Stage currentOwner = (Stage)this.root.getScene().getWindow();
+
             Stage resultStage = new Stage();
             resultStage.setTitle("Game Results");
 
-            resultStage.initOwner(root.getScene().getWindow());
             resultStage.initModality(Modality.APPLICATION_MODAL);
-
-             ResultController resultController = loader.getController();
-             resultController.displayResult(winnings, this);
+            resultStage.initOwner(currentOwner);
 
             Scene scene = new Scene(root);
             resultStage.setScene(scene);
-            resultStage.showAndWait();
 
+            ResultController resultController = loader.getController();
+            resultController.displayResult(winnings, this);
+
+            resultStage.showAndWait();
         } catch (IOException e) {
             log("Failed to load Result Scene: " + e.getMessage());
         }
@@ -201,10 +211,20 @@ public class GameController implements Initializable {
             pause.play();
         }
     }
+    private void animateDealerCards(ArrayList<Card> hand) {
+        ImageView[] views = {dealerCardOne, dealerCardTwo, dealerCardThree};
+        for (int i = 0; i < 3; i++) {
+            final int index = i;
+            PauseTransition pause = new PauseTransition(Duration.seconds(0.5 * (i + 1)));
+            pause.setOnFinished(e -> setCardImage(views[index], hand.get(index)));
+            pause.play();
+        }
+    }
 
     private void setCardImage(ImageView view, Card card) {
         try {
             view.setImage(new Image(getClass().getResourceAsStream("/Cards/" + card.getPath())));
+            view.setStyle("-fx-background-color: cornsilk;");
         } catch (Exception e) {
             log("Error loading image: " + card.getPath());
         }

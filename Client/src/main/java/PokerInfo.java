@@ -14,7 +14,6 @@ public class PokerInfo implements Serializable {
 
     private int anteBet;
     private int pairPlusBet;
-    private int playBet;
     private int totalWinnings;
 
     public String gameMessage;
@@ -25,7 +24,6 @@ public class PokerInfo implements Serializable {
         this.gameDeck = new Deck();
         this.anteBet = 0;
         this.pairPlusBet = 0;
-        this.playBet = 0;
         this.totalWinnings = 0;
     }
     // ------ Getters/Setters ----------
@@ -35,11 +33,19 @@ public class PokerInfo implements Serializable {
 
     public void drawClient(){
         for (int i = 0 ; i < 3 ; i++){
-            clientHand.add(gameDeck.getCard());
+            Card temp = gameDeck.getCard();
+            clientHand.add(temp);
+            gameDeck.removeCard(temp);
         }
     }
 
-    public void drawDealer(){}
+    public void drawDealer(){
+        for (int i = 0 ; i < 3 ; i++){
+            Card temp = gameDeck.getCard();
+            dealerHand.add(temp);
+            gameDeck.removeCard(temp);
+        }
+    }
 
     public void sortHand(ArrayList<Card> hand){ Collections.sort(hand); }
 
@@ -90,9 +96,6 @@ public class PokerInfo implements Serializable {
 
     public int getPairPlusBet() { return pairPlusBet; }
     public void setPairPlusBet(int pairPlusBet) { this.pairPlusBet = pairPlusBet; }
-
-    public int getPlayBet() { return playBet; }
-    public void setPlayBet(int playBet) { this.playBet = playBet; }
 
     public int getTotalWinnings() { return totalWinnings; }
     public void setTotalWinnings(int totalWinnings) { this.totalWinnings = totalWinnings; }
