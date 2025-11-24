@@ -9,46 +9,39 @@ public class Client extends Thread {
     private Socket clientSocket;
     private ObjectOutputStream out;
     private ObjectInputStream in;
+    private Consumer<Serializable> callback;
 
     private String ip;
     private int port;
-    private Consumer<Serializable> callback;
 
-    public Client(String ip, int port, Consumer<Serializable> call){
-        this.ip = ip;
-        this.port = port;
-        this.callback = call;
+    // moved connection attempt to constructor to catch exception if connection fails
+    public Client(String ip, int port, Consumer<Serializable> callback) throws IOException {
+        this.clientSocket = new Socket(ip,port);
+        this.out = new ObjectOutputStream(clientSocket.getOutputStream());
+        this.in = new ObjectInputStream(clientSocket.getInputStream());
+        this.callback = callback;
+        this.clientSocket.setTcpNoDelay(true);
     }
 
     @Override
     public void run() {
         try {
-            clientSocket = new Socket(ip, port);
-            out = new ObjectOutputStream(clientSocket.getOutputStream());
-            in = new ObjectInputStream(clientSocket.getInputStream());
-            clientSocket.setTcpNoDelay(true);
-
-            PokerInfo hello = new PokerInfo();
-            hello.gameMessage = clientSocket.getPort() + " has Connected to the server";
-            this.send(hello);
-
             while(true){
                 Serializable data = (Serializable) in.readObject();
                 callback.accept(data);
             }
-        }catch(IOException e){
-            System.out.println("Error : " + e.getMessage());
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
+        } catch (Exception e) {
+            System.out.println("Connection lost: " + e.getMessage());
         }
-    } // end run method
+    }
 
     public void send(Serializable data){
         try {
             out.writeObject(data);
             out.reset();
-        }catch(IOException e){
-            System.out.println(e.getMessage());
+            out.flush();
+        } catch (IOException e) {
+            System.out.println("Failed to send data: " + e.getMessage());
             e.printStackTrace();
         }
     }

@@ -5,9 +5,7 @@ import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
@@ -19,12 +17,12 @@ import java.util.ResourceBundle;
 public class GameController implements Initializable {
     Client clientConnection;
 
-    @FXML
-    private ComboBox<String> menuComboBox;
-    @FXML
-    private TextField wagerField;
-    @FXML
-    private TextField pairPlusField;
+    @FXML private ComboBox<String> menuComboBox;
+    @FXML private TextField wagerField;
+    @FXML private TextField pairPlusField;
+    @FXML private Button playButton, foldButton, dealButton;
+    @FXML private Label statusLabel, totalWinningsLabel;
+    @FXML private TextArea gameLog;
 
     @FXML private ImageView playerCardOne, playerCardTwo, playerCardThree;
     @FXML private ImageView dealerCardOne, dealerCardTwo, dealerCardThree;
@@ -32,14 +30,14 @@ public class GameController implements Initializable {
     public void initialize(URL location, ResourceBundle resources){
     }
 
-    public void connectClient(String ip, int port) {
-        clientConnection = new Client(ip, port, data -> {
-            Platform.runLater(() -> {
-                PokerInfo info = (PokerInfo) data;
-                System.out.println(info.gameMessage);
-            });
-        });
+    public void initClient(Client client) {
+        this.clientConnection = client;
+
         clientConnection.start();
+
+        PokerInfo hello = new PokerInfo();
+        hello.gameMessage = "New player connected";
+        clientConnection.send(hello);
     }
 
     public void handleMenu(ActionEvent event) {
