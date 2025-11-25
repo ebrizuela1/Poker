@@ -39,6 +39,7 @@ public class GameController implements Initializable {
     // Data member to keep track of ante pushed to next hand
     // (Dealer has no queen)
     private int pushedAnteAmount = 0;
+    private int storedWinnings = 0;
     /**
      * CURRENT MESSAGES SENT TO SERVER:
      *  DEAL
@@ -80,6 +81,9 @@ public class GameController implements Initializable {
             info.setPairPlusBet(pairPlus);
             info.gameMessage = "DEAL";
 
+            // set winnings referencing data memeber stored in GameController
+            info.setTotalWinnings(this.storedWinnings);
+
             log("Placing bets... Dealing hand.");
             statusLabel.setText("Dealing...");
 
@@ -115,6 +119,7 @@ public class GameController implements Initializable {
 
     public void updateGame(PokerInfo info) {
         this.currentInfo = info;
+        this.storedWinnings = currentInfo.getTotalWinnings();
         String msg = info.gameMessage;
 
         if (msg != null && !msg.isEmpty()) {
@@ -178,7 +183,7 @@ public class GameController implements Initializable {
     public void handleFreshStart(){
         resetGameUI();
         currentInfo.gameMessage = "FRESH_START";
-
+        this.storedWinnings = 0; // reset winnings
         clientConnection.send(currentInfo);
         log("Fresh Start! Starting over...");
     }
@@ -231,7 +236,7 @@ public class GameController implements Initializable {
             wagerField.setDisable(false); // just in case
         }
         pairPlusField.clear();
-        totalWinningsLabel.setText("Total Winnings: $0");
+        totalWinningsLabel.setText("Winnings : $" + this.storedWinnings);
 
         resetCardImage(playerCardOne);
         resetCardImage(playerCardTwo);

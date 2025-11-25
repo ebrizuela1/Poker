@@ -12,6 +12,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
+<?import javafx.scene.layout.StackPane?>
 <BorderPane fx:id="root" prefHeight="700" prefWidth="900" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/19" fx:controller="GameController">
 
     <top>
@@ -35,34 +36,46 @@
             <VBox alignment="CENTER" spacing="10">
                 <Label text="DEALER" styleClass="hand-label"/>
                 <HBox alignment="CENTER" spacing="15.0">
-                    <ImageView fx:id="dealerCardOne" fitHeight="170.0" fitWidth="120.0" pickOnBounds="true" preserveRatio="true" styleClass="card-image" style="-fx-background-color: white">
-                        <Image url="@../Cards/back.png" />
-                    </ImageView>
-                    <ImageView fx:id="dealerCardTwo" fitHeight="170.0" fitWidth="120.0" pickOnBounds="true" preserveRatio="true" styleClass="card-image" style="-fx-background-color: white">
-                        <Image url="@../Cards/back.png" />
-                    </ImageView>
-                    <ImageView fx:id="dealerCardThree" fitHeight="170.0" fitWidth="120.0" pickOnBounds="true" style="-fx-background-color: white"
-                               preserveRatio="true" styleClass="card-image">
-                        <Image url="@../Cards/back.png"/>
-                    </ImageView>
+                    <StackPane style="-fx-background-color: white; -fx-background-radius:5">
+                        <ImageView fx:id="dealerCardOne" fitHeight="170.0" fitWidth="120.0" pickOnBounds="true" preserveRatio="true" styleClass="card-image" style="-fx-background-color: white">
+                            <Image url="@../Cards/back.png" />
+                        </ImageView>
+                    </StackPane>
+                    <StackPane style="-fx-background-color: white; -fx-background-radius:5">
+                        <ImageView fx:id="dealerCardTwo" fitHeight="170.0" fitWidth="120.0" pickOnBounds="true" preserveRatio="true" styleClass="card-image" style="-fx-background-color: white">
+                            <Image url="@../Cards/back.png" />
+                        </ImageView>
+                    </StackPane>
+                    <StackPane style="-fx-background-color: white; -fx-background-radius:5">
+                        <ImageView fx:id="dealerCardThree" fitHeight="170.0" fitWidth="120.0" pickOnBounds="true" style="-fx-background-color: white"
+                                   preserveRatio="true" styleClass="card-image">
+                            <Image url="@../Cards/back.png"/>
+                        </ImageView>
+                    </StackPane>
                 </HBox>
             </VBox>
 
             <VBox alignment="CENTER" spacing="10">
                 <Label text="PLAYER" styleClass="hand-label"/>
                 <HBox alignment="CENTER" spacing="15.0">
-                    <ImageView fx:id="playerCardOne" fitHeight="170.0" fitWidth="120.0" pickOnBounds="true"
-                               preserveRatio="true" styleClass="card-image" style="-fx-background-color: white">
-                        <Image url="@../Cards/back.png"/>
-                    </ImageView>
-                    <ImageView fx:id="playerCardTwo" fitHeight="170.0" fitWidth="120.0" pickOnBounds="true"
-                               preserveRatio="true" styleClass="card-image" style="-fx-background-color: white">
-                        <Image url="@../Cards/back.png"/>
-                    </ImageView>
-                    <ImageView fx:id="playerCardThree" fitHeight="170.0" fitWidth="120.0" pickOnBounds="true"
-                               preserveRatio="true" styleClass="card-image" style="-fx-background-color: white">
-                        <Image url="@../Cards/back.png"/>
-                    </ImageView>
+                    <StackPane style="-fx-background-color: white; -fx-background-radius:5">
+                        <ImageView fx:id="playerCardOne" fitHeight="170.0" fitWidth="120.0" pickOnBounds="true"
+                                   preserveRatio="true" styleClass="card-image" style="-fx-background-color: white">
+                            <Image url="@../Cards/back.png"/>
+                        </ImageView>
+                    </StackPane>
+                    <StackPane style="-fx-background-color: white; -fx-background-radius:5">
+                        <ImageView fx:id="playerCardTwo" fitHeight="170.0" fitWidth="120.0" pickOnBounds="true"
+                                   preserveRatio="true" styleClass="card-image" style="-fx-background-color: white">
+                            <Image url="@../Cards/back.png"/>
+                        </ImageView>
+                    </StackPane>
+                    <StackPane style="-fx-background-color: white; -fx-background-radius:5">
+                        <ImageView fx:id="playerCardThree" fitHeight="170.0" fitWidth="120.0" pickOnBounds="true"
+                                   preserveRatio="true" styleClass="card-image" style="-fx-background-color: white">
+                            <Image url="@../Cards/back.png"/>
+                        </ImageView>
+                    </StackPane>
                 </HBox>
             </VBox>
         </VBox>
