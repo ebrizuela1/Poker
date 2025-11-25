@@ -74,6 +74,7 @@ public class ClientHandler implements Runnable {
 
         info.gameMessage = "Hand Dealt. Play or Fold.";
         serverController.updateLog("Player " + playerID + ": " + info.gameMessage);
+
         send(info);
     }
 
@@ -83,31 +84,26 @@ public class ClientHandler implements Runnable {
      * otherwise handles logic but tie does the same thing
      * */
     void handlePlay(PokerInfo info) {
+        // (get the initial wager plus the playing fee that is the same as wager) + pairPlusBet
+        int wagerCost = (info.getAnteBet() * 2 ) + info.getPairPlusBet();
 
-        int roundWinnings = ThreeCardLogic.evalPPWinnings(info.getClientHand(), info.getPairPlusBet());
+        int roundWinnings = -wagerCost; // offset our winning by what we already spent
+        roundWinnings += ThreeCardLogic.evalPPWinnings(info.getClientHand(), info.getPairPlusBet());
         // Return val: 0 for neither, 1 if dealer wins, 2 if player wins
         if (isDealerQualified(info.getDealerHand())) {
-//            info.drawClient();
-//            info.drawDealer();
-//            info.gameMessage = "Redrawing!";
-//            serverController.updateLog("Dealer hand not qualified... Redraw");
-//            send(info);
-//            return;
-//        }
             int result = ThreeCardLogic.compareHands(info.getDealerHand(), info.getClientHand());
-
             switch (result) {
                 case 0:
                     info.gameMessage = "TIE";
-                    roundWinnings += info.getAnteBet(); // return ante to user
+                    roundWinnings += info.getAnteBet() * 2; // return ante to user
                     break;
                 case 1:
                     info.gameMessage = "LOSE";
-                    roundWinnings -= info.getAnteBet(); // subtract ante
+
                     break;
                 case 2:
                     info.gameMessage = "WIN"; // player wins anteBet * 2
-                    roundWinnings += info.getAnteBet() * 2; //
+                    roundWinnings += info.getAnteBet() * 4; //
                     break;
                 default:
                     System.out.println("INCORRECT USAGE IN HANDLE PLAY");
@@ -115,6 +111,7 @@ public class ClientHandler implements Runnable {
             }
         }else {
             info.gameMessage = "Dealer is not qualified."; // message read into GameController : resetGameUI;
+            roundWinnings += info.getAnteBet() * 2;
         }
         info.setTotalWinnings(info.getTotalWinnings() + roundWinnings);
         serverController.updateLog("Player " + playerID + ": " + info.gameMessage + " " + info.getTotalWinnings());
@@ -127,15 +124,10 @@ public class ClientHandler implements Runnable {
      * */
     void handleFold(PokerInfo info){
         this.gameInfo = info;
-        int totalWinnings = 0;
-
-        totalWinnings -= info.getAnteBet();
-
-        if (info.getPairPlusBet() > 0) {
-            totalWinnings -= info.getPairPlusBet();
-        }
-
-        info.setTotalWinnings(totalWinnings);
+        // Player loses the ante bet and the pair plus bet
+        int currentLoss = info.getAnteBet() + info.getPairPlusBet();
+        int newTotal = info.getTotalWinnings() - currentLoss;
+        info.setTotalWinnings(newTotal);
         info.gameMessage = "FOLDED. You lost your wagers.";
         serverController.updateLog("Player " + playerID + ": " + info.gameMessage);
         send(info);

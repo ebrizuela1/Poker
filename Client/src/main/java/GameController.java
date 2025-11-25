@@ -79,6 +79,7 @@ public class GameController implements Initializable {
             PokerInfo info = new PokerInfo();
             info.setAnteBet(ante);
             info.setPairPlusBet(pairPlus);
+            info.setTotalWinnings(this.storedWinnings);
             info.gameMessage = "DEAL";
 
             // set winnings referencing data memeber stored in GameController
