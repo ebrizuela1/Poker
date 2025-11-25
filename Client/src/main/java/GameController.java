@@ -36,7 +36,9 @@ public class GameController implements Initializable {
 
     @FXML private ImageView playerCardOne, playerCardTwo, playerCardThree;
     @FXML private ImageView dealerCardOne, dealerCardTwo, dealerCardThree;
-
+    // Data member to keep track of ante pushed to next hand
+    // (Dealer has no queen)
+    private int pushedAnteAmount = 0;
     /**
      * CURRENT MESSAGES SENT TO SERVER:
      *  DEAL
@@ -44,7 +46,9 @@ public class GameController implements Initializable {
      *  FOLD
      *  FRESH_START
      * */
-
+    public void startNextHand(){
+        resetGameUI();
+    }
     public void initialize(URL location, ResourceBundle resources){
         resetGameUI();
     }
@@ -80,6 +84,7 @@ public class GameController implements Initializable {
             statusLabel.setText("Dealing...");
 
             clientConnection.send(info);
+            pushedAnteAmount = 0; // reset after dealing the hand
         } catch (NumberFormatException e) {
             log("Error: Invalid bet amount.");
         }
@@ -114,6 +119,31 @@ public class GameController implements Initializable {
 
         if (msg != null && !msg.isEmpty()) {
             log("Server: " + msg);
+        }
+        // First check if the ante was pushed
+        if ("Dealer is not qualified.".equals(msg)){
+            this.pushedAnteAmount = info.getAnteBet();
+            // Show the dealers hand so the user knows the dealer did not even have a queen
+            updateHandImages(info.getDealerHand(), dealerCardOne, dealerCardTwo, dealerCardThree);
+            // Run the ResultController alert
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML/ResultPopup.fxml"));
+                Parent root = loader.load();
+                Stage currentOwner = (Stage)this.root.getScene().getWindow();
+                Stage resultStage = new Stage();
+                resultStage.setTitle("Game Results");
+                resultStage.initModality(Modality.APPLICATION_MODAL);
+                resultStage.initOwner(currentOwner);
+                Scene scene = new Scene(root);
+                resultStage.setScene(scene);
+                ResultController resultController = loader.getController();
+                // use custom message displayResults(message, winning, controller)
+                resultController.displayResult("Dealer Not Qualified!\nAnte was pushed to next hand.",
+                        info.getTotalWinnings(), this);
+                resultStage.showAndWait();
+            } catch (IOException e) {
+                log("Failed to load Result Scene: " + e.getMessage());
+            }
         }
 
         if ("Hand Dealt. Play or Fold.".equals(msg)) {
@@ -190,7 +220,16 @@ public class GameController implements Initializable {
     private void resetGameUI() {
         log("--- New Game ---");
         statusLabel.setText("Place your bets.");
-        wagerField.clear();
+        // Check if anything was pushed back to hand
+        if (pushedAnteAmount > 0){
+            //disable ante field
+            wagerField.setText(String.valueOf(pushedAnteAmount));
+            wagerField.setDisable(true);
+            this.log("Ante of $" + pushedAnteAmount + " pushed from previous hand.");
+        }else{
+            wagerField.clear();
+            wagerField.setDisable(false); // just in case
+        }
         pairPlusField.clear();
         totalWinningsLabel.setText("Total Winnings: $0");
 
@@ -201,7 +240,7 @@ public class GameController implements Initializable {
         resetCardImage(dealerCardTwo);
         resetCardImage(dealerCardThree);
 
-        setBettingFieldsDisable(false);
+        pairPlusField.setDisable(false);
         dealButton.setDisable(false);
         setPlayFoldDisable(true);
         currentInfo = null;

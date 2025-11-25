@@ -20,10 +20,11 @@ public class ResultController {
     public void displayResult(int winnings, GameController gameController) {
         String message = (winnings >= 0) ? "PLAYER WINS!" : "PLAYER LOST!";
         displayResult(message, winnings, gameController);
+        this.myGameCtrl = gameController;
     }
 
     public void handlePlayAgain(ActionEvent event) {
-        myGameCtrl.handleFreshStart();
+        myGameCtrl.startNextHand();
 
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.close();

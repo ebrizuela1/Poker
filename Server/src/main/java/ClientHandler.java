@@ -114,7 +114,7 @@ public class ClientHandler implements Runnable {
                     break;
             }
         }else {
-            info.gameMessage = "Dealer is not qualifies"; // message read into GameController : resetGameUI;
+            info.gameMessage = "Dealer is not qualified."; // message read into GameController : resetGameUI;
         }
         info.setTotalWinnings(info.getTotalWinnings() + roundWinnings);
         serverController.updateLog("Player " + playerID + ": " + info.gameMessage + " " + info.getTotalWinnings());
